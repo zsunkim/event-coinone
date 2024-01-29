@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { utilities, WinstonModule } from 'nest-winston';
+import { UsersModule } from './users/users.module';
 import * as winston from 'winston';
 
 @Module({
@@ -16,10 +17,7 @@ import * as winston from 'winston';
       transports: [
         new winston.transports.Console({
           level: 'info',
-          format: winston.format.combine(
-            winston.format.timestamp(),
-            utilities.format.nestLike('EVENT', { prettyPrint: true }),
-          ),
+          format: winston.format.combine(winston.format.timestamp(), utilities.format.nestLike('EVENT', { prettyPrint: true })),
         }),
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         new (require('winston-daily-rotate-file'))({
@@ -44,6 +42,8 @@ import * as winston from 'winston';
         }),
       ],
     }),
+
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
