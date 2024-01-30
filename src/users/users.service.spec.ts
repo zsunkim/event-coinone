@@ -1,18 +1,39 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EventService } from './users.service';
+import { UsersService } from './users.service';
+import { UserAgreementsReqDto } from './dtos/req/user.agreements.req.dto';
+import { WINSTON_MODULE_PROVIDER, WinstonModule } from 'nest-winston';
 
-describe('EventService', () => {
-  let service: EventService;
+describe('UsersService', () => {
+  let service: UsersService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [EventService],
+      imports: [WinstonModule],
+      providers: [
+        UsersService,
+        {
+          provide: WINSTON_MODULE_PROVIDER,
+          useValue: { log: jest.fn() },
+        },
+      ],
     }).compile();
 
-    service = module.get<EventService>(EventService);
+    service = module.get<UsersService>(UsersService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  describe('getAgreementsUsers', () => {
+    const userAgreementsReqDto: UserAgreementsReqDto = {
+      balance: '3000',
+    };
+
+    it('should return an object', async () => {
+      const result = await service.getAgreementsUsers(userAgreementsReqDto);
+      expect(result).toBeInstanceOf(Object);
+    });
+
+    it('should return an array', async () => {
+      const result = await service.getAgreementsUsers(userAgreementsReqDto);
+      expect(result.rows).toBeInstanceOf(Array);
+    });
   });
 });
