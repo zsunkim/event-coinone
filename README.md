@@ -17,3 +17,15 @@ $ npm run start
 
 http://localhost:3000/api-docs
 
+## Test Coverage
+
+- coverage 확인
+```bash
+$ npm run test:cov
+```
+
+- unit test 확인
+```bash
+$ npm run test
+```
+
