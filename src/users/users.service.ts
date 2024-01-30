@@ -75,6 +75,7 @@ export class UsersService {
       };
     } catch (error) {
       this.logger.log({ level: 'error', message: error });
+      throw error;
     }
   }
 }
