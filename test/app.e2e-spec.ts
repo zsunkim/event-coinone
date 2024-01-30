@@ -18,4 +18,12 @@ describe('AppController (e2e)', () => {
   it('/ (GET)', () => {
     return request(app.getHttpServer()).get('/').expect(200).expect('Hello World!');
   });
+
+  it('/v1/user/agreements (GET)', () => {
+    return request(app.getHttpServer()).get('/').expect(200);
+  });
+
+  it('/v1/user/agreements (GET)', () => {
+    return request(app.getHttpServer()).get('?timestamp=1704067201&balance=3000&userId=USER_A,USER_B').expect(200);
+  });
 });
